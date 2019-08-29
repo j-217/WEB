@@ -1,0 +1,360 @@
+.wjs_header {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #ccc;
+}
+.wjs_header .row > div:nth-of-type(-n+3) {
+  border-right: 1px solid #ccc;
+}
+.wjs_header .row > div:first-of-type {
+  text-align: center;
+  position: relative;
+}
+.wjs_header .row > div:first-of-type:hover img {
+  display: block;
+}
+.wjs_header .row > div:first-of-type img {
+  display: none;
+  position: absolute;
+  border: 1px solid #ccc;
+  border-top: none;
+  top: 49px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+.wjs_header .row > div:last-of-type {
+  text-align: center;
+}
+.wjs_header .row > div:last-of-type > .btn-danger {
+  background-color: #e92322;
+  border-color: #e92322;
+}
+.wjs_header .row > div:last-of-type > .btn {
+  padding: 3px 15px;
+}
+.wjs_header .row > div:last-of-type > .btn-link {
+  color: #333;
+}
+.wjs_header .row > div:last-of-type > .btn-link:hover {
+  text-decoration: none;
+}
+.wjs_nav {
+  margin-bottom: 0;
+}
+.wjs_nav .navbar-brand {
+  height: 80px;
+  line-height: 50px;
+  font-size: 40px;
+}
+.wjs_nav .navbar-brand > span:first-of-type {
+  color: #e92322;
+}
+.wjs_nav .navbar-brand > span:last-of-type {
+  color: #333;
+}
+.wjs_nav .navbar-nav {
+  background-color: transparent;
+}
+.wjs_nav .navbar-nav > li {
+  height: 80px;
+  margin-bottom: 3px;
+}
+.wjs_nav .navbar-nav > li > a {
+  line-height: 50px;
+  font-size: 16px;
+}
+.wjs_nav .navbar-nav > li > a:hover,
+.wjs_nav .navbar-nav > li a:focus {
+  color: #777;
+  border-bottom: 3px solid #e92322;
+}
+.wjs_nav .navbar-nav > li.active > a,
+.wjs_nav .navbar-nav > li.active a:hover,
+.wjs_nav .navbar-nav > li.active a:focus {
+  background-color: transparent;
+  border-bottom: 3px solid #e92322;
+}
+.wjs_nav .navbar-toggle {
+  margin-top: 23px;
+}
+.wjs_banner > #banner_slide > .carousel-inner a {
+  width: 100%;
+  display: block;
+}
+.wjs_banner > #banner_slide > .carousel-inner a > img {
+  width: 100%;
+  display: block;
+}
+.wjs_banner > #banner_slide > .carousel-inner a.banner_bgimg {
+  height: 410px;
+  background-size: cover;
+  background-position: center center;
+}
+.wjs_info .row {
+  padding: 30px;
+}
+.wjs_info .row a {
+  display: block;
+}
+.wjs_info .row .media {
+  margin-top: 20px;
+}
+.wjs_info .row .media span {
+  font-size: 30px;
+}
+.wjs_order {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 20px;
+}
+.wjs_order .row {
+  color: #777;
+}
+.wjs_order .row .wjs_icon {
+  font-size: 18px;
+}
+.wjs_order .row .col-sm-8 {
+  text-align: center;
+}
+.wjs_order .row .col-sm-8 a:first-of-type:hover {
+  color: #e92322;
+}
+.wjs_order .row .col-sm-8 a:nth-of-type(2) {
+  border-bottom: 1px dashed #e92322;
+}
+.wjs_order .row .col-sm-8 a:nth-of-type(2):hover {
+  color: #e92322;
+}
+.wjs_order .row .col-sm-4 {
+  text-align: left;
+}
+.wjs_order .row .col-sm-4 a:hover {
+  color: #e92322;
+}
+.wjs_products {
+  clear: both;
+  background-color: #eee;
+  padding: 20px;
+}
+.wjs_products .nav-tabs-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+.wjs_products .nav-tabs > li {
+  margin: 0 10px 10px;
+}
+.wjs_products .nav-tabs > li > a {
+  line-height: 50px;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+}
+.wjs_products .nav-tabs > li > a:hover {
+  border-bottom: 3px solid #e92322;
+}
+.wjs_products .nav-tabs > li.active > a,
+.wjs_products .nav-tabs > li.active a:hover,
+.wjs_products .nav-tabs > li.active a:focus {
+  border: none;
+  border-radius: 0;
+  border-bottom: 3px solid #e92322;
+  background-color: #eee;
+}
+.wjs_products .tab-content .wjs_pBox {
+  width: 100%;
+  position: relative;
+  height: 180px;
+  background-color: #fff;
+  margin-top: 20px;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pLeft {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-right: 100px;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pLeft > p {
+  text-align: center;
+  margin-top: 10px;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pLeft > .row {
+  width: 100%;
+  font-size: 12px;
+  margin: 0 -8px;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pLeft > .row > .col-xs-6:nth-of-type(2n) p {
+  text-align: right;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 180px;
+  width: 100px;
+  text-align: center;
+  padding: 50px 0;
+  border-left: 2px dashed #eee;
+  color: #e92322;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight > b {
+  font-size: 40px;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight > sub {
+  bottom: 0;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight::before,
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight::after {
+  content: "";
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #eee;
+  position: absolute;
+  left: -5px;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight::before {
+  top: -5px;
+  box-shadow: 0px -1px 1px #ddd inset;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight::after {
+  bottom: -5px;
+  box-shadow: 0px 1px 1px #ddd inset;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight > .wrap {
+  width: 100%;
+  position: absolute;
+  top: 30px;
+  text-align: center;
+  color: #777;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight > .wrap > span:nth-of-type(1) {
+  padding: 2px;
+  border: 1px solid lightblue;
+  cursor: pointer;
+}
+.wjs_products .tab-content .wjs_pBox > .wjs_pRight > .wrap > span:nth-of-type(2) {
+  padding: 2px;
+  border: 1px solid lightgreen;
+  cursor: pointer;
+}
+.wjs_products .tab-content .wjs_pBox.active {
+  position: relative;
+  background-color: #e92322;
+}
+.wjs_products .tab-content .wjs_pBox.active > .wjs_pLeft,
+.wjs_products .tab-content .wjs_pBox.active .wjs_pRight {
+  color: #fff;
+}
+.wjs_products .tab-content .wjs_pBox.active > .wjs_pLeft > .wrap span,
+.wjs_products .tab-content .wjs_pBox.active .wjs_pRight > .wrap span {
+  color: #fff;
+}
+.wjs_products .tab-content .wjs_pBox.active > .wjs_pLeft::before {
+  content: "\e915";
+  font-family: "wjs";
+  font-size: 30px;
+  position: absolute;
+  top: -6px;
+  left: 0px;
+}
+.wjs_news .news_main {
+  height: 60px;
+}
+.wjs_news .news_main > p {
+  font-size: 20px;
+  text-align: center;
+  line-height: 60px;
+  border-bottom: 2px solid #eee;
+  position: relative;
+}
+.wjs_news .news_main > p::after {
+  content: "";
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  border: 2px solid #eee;
+  background-color: #fff;
+  display: block;
+  position: absolute;
+  bottom: -7px;
+  right: -7px;
+}
+.wjs_news .news_cats {
+  margin: 20px 0;
+  position: relative;
+}
+.wjs_news .news_cats > .nav-tabs {
+  border: none;
+}
+.wjs_news .news_cats > .nav-tabs > li {
+  padding-bottom: 30px;
+}
+.wjs_news .news_cats > .nav-tabs > li > a {
+  border: none;
+  background-color: #eee;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+}
+.wjs_news .news_cats > .nav-tabs > li > a:hover,
+.wjs_news .news_cats > .nav-tabs > li > a:focus {
+  background-color: #e92322;
+}
+.wjs_news .news_cats > .nav-tabs > li > a > span {
+  font-size: 28px;
+  color: #fff;
+}
+.wjs_news .news_cats > .nav-tabs > li:last-of-type {
+  padding-bottom: 0;
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .wjs_news .news_cats > .nav-tabs > li {
+    margin: 20px 30px;
+    padding-bottom: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+  .wjs_news .news_cats > .nav-tabs > li {
+    margin: 20px 0;
+    padding-bottom: 0;
+    width: 25%;
+  }
+}
+.wjs_news .news_cats > .news_line {
+  height: 100%;
+  border-left: 1px dashed #e92322;
+  position: absolute;
+  left: 54%;
+}
+.wjs_news .news_detail ul {
+  list-style: none;
+  padding-left: 10px;
+}
+.wjs_news .news_detail ul > li {
+  line-height: 60px;
+}
+.wjs_news .news_detail ul > li > a {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.wjs_partner > .container {
+  padding: 20px 0;
+  text-align: center;
+}
+.wjs_partner > .container > h3 {
+  text-align: center;
+}
+.wjs_partner > .container > ul {
+  list-style: none;
+  display: inline-block;
+}
+.wjs_partner > .container > ul > li {
+  float: left;
+  margin: 0 20px 20px 0;
+}
+.wjs_partner > .container > ul > li > .wjs_icon {
+  font-size: 80px;
+}

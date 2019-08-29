@@ -1,0 +1,244 @@
+.jd_layout{
+    width: 100%;
+    max-width: 640px;
+    min-width: 320px;
+    margin: 0 auto;
+    /*height: 1000px;*/
+    background-color: #eee;
+    position: relative;
+}
+
+/*搜索栏*/
+.jd_search{
+    width: 100%;
+    height: 40px;
+    position: fixed;
+    /*设置最大宽度解决定位fixed后右侧超出问题*/
+    max-width: 640px;
+    background-color: rgba(355, 35, 35, 0);
+    z-index: 10;
+}
+
+.jd_logo{
+    width: 56px;
+    height: 40px;
+    position: absolute;
+    left: 8px;
+    top: 7px;   
+    background: url("../img/jd-sprites.png");
+    background-size: 200px 200px;
+    background-position: 0 -108px;
+}
+
+.jd_login{
+    width: 56px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+}
+
+.jd_search_box{
+    height: 40px;
+    margin: 0 80px;
+}
+
+.jd_search_box > input{
+    width: 100%;
+    height: 30px;
+    margin: 5px auto;
+    border-radius: 15px;
+    padding-left: 30px;
+    color: #666;
+}
+
+.jd_search_box::before{
+    content: "";
+    width: 20px;
+    height: 40px;
+    background: url("../img/jd-sprites.png");
+    background-size: 200px 200px;
+    background-position: -56px -108px;
+    position: absolute; 
+    left: 85px;
+    top: 9px;
+}
+
+/*轮播图*/
+.jd_banner{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.jd_banner_img{
+    width: 800%;
+    /*width: 1000%;*/
+    position: relative;
+}
+
+.jd_banner_img > ul > li{
+    width: 12.5%;
+    /*width: 10%;*/
+    float: left;
+}
+
+.jd_banner_img > li a img{
+    width: 100%;
+    /*去除文本基线方法：
+        1.vertical-align: bottom;
+        2.display: block;
+        3.font-size: 0;
+    */
+    vertical-align: bottom;
+}
+
+.jd_banner_indicator{
+    width: 150px;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+}
+
+.jd_banner_indicator > li{
+    float: left;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    margin-left: 10px;
+}
+
+.jd_banner_indicator > li:first-of-type{
+    margin-left: 0;
+}
+
+.jd_banner_indicator > li.active{
+    background: #fff;
+}
+
+
+/*导航块*/
+.jd_nav{
+    width: 100%;
+    background: #fff;
+}
+
+.jd_nav > ul > li{
+    float: left;
+    width: 25%;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.jd_nav img{
+    max-width: 60px;
+}
+
+/*产品块*/
+.jd_product_box{
+    width: 100%;
+    background: #fff;
+    margin-top: 10px;
+    box-shadow: 1px 2px 5px #333;
+}
+
+.jd_product_tip{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+
+.jd_product_tip > h3{
+    width: 100%;
+    color: #666;
+    padding-left: 30px
+}
+
+.jd_product_tip > h3::before{
+    content: "";
+    width: 5px;
+    height: 15px;
+    background-color: #e92322;
+    position: absolute;
+    left: 18px;
+    top: 6px;
+}
+
+.jd_product_content > a{
+    width: 50%;
+}
+
+.jd_product_content > a > img{
+    width: 100%;
+    display: block;
+}
+
+
+/*秒杀块*/
+.jd_seckill_tip{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+}
+
+.jd_seckill_text{
+    padding: 0 10px 0 30px;
+    color: #666;
+    font-weight: bold;
+}
+
+.jd_seckill_text::before{
+    content: "";
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    background: url("../uploads/seckill-icon.png") no-repeat center center;
+    background-size: auto 20px;
+}
+
+.jd_seckill_time > span{
+    background: #000;
+    color: #fff;
+    padding: 0 2px;
+}
+
+.jd_seckill_time > span:nth-of-type(3n){
+    background: transparent;
+    color: #000;
+}
+
+.jd_seckill_tip_right{
+    padding-right: 10px;
+    color: #666;
+}
+
+
+.jd_seckill_content > ul > li{
+    width: 33%;
+    float: left;
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+.jd_seckill_content > ul > li > a > img{
+    width: 80%;
+    padding-right: 25%;
+    margin-right: -25%;
+    border-right: 2px solid #ccc;
+}
+
+.jd_seckill_content > ul > li > a > img.remove_border{
+    border-right: none;
+}

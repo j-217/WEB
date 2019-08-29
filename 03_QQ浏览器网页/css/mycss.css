@@ -1,0 +1,121 @@
+/* 背景气泡布局 */
+
+.bubbles{
+    width: 1000px;
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /*background: #aaa;*/
+}
+
+.row1, .row2, .row3{
+    width: 1000px;
+    height: 50px;
+    position: absolute;
+}
+
+.row2{
+    top: 50%;
+}
+
+.row3{
+    bottom: 0;
+}
+
+.row1 div,.row2 div,.row3 div{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: 
+        -webkit-linear-gradient(top, #fff, #dedede);
+    position: absolute;
+}
+
+.bubble1-1{
+    margin-left: 100px;
+    margin-top: 40px;
+}
+
+.row1 .bubble1-2{
+    width: 120px;
+    height: 120px;
+    margin-left: 500px;
+    margin-top: 5px;
+    transform: rotate(80deg);
+}
+
+.bubble1-3{
+    margin-left: 800px;
+}
+
+.row2 .bubble2-1{
+    width: 100px;
+    height: 100px;
+    transform: rotate(20deg);
+    margin-top: -20px;
+}
+
+.row2 .bubble2-2{
+    width: 150px;
+    height: 150px;
+    margin-left: 350px;
+    margin-top: 20px;    
+}
+
+.row2 .bubble2-3{
+    width: 120px;
+    height: 120px;
+    margin-left: 700px;
+    margin-top: -80px;
+    transform: rotate(-20deg);
+}
+
+.row3 .bubble3-1{
+    width: 200px;
+    height: 200px;
+    margin-left: 100px;
+    margin-top: -100px;
+}
+
+.row3 .bubble3-2{
+    width: 300px;
+    height: 300px;
+    margin-left: 500px;
+    margin-top: -100px;
+    transform: rotate(100deg);
+}
+
+.row3 .bubble3-3{
+    width: 150px;
+    height: 150px;
+    margin-left: 850px;
+    margin-top: -400px;
+}
+
+/* 第一屏 */
+
+
+/* 动画组 */
+.row1 div{
+    animation: bubble-moving 80s linear infinite;
+}
+
+.row2 div{
+    animation: bubble-moving 100s linear infinite;
+}
+
+.row3 div{
+    animation: bubble-moving 120s linear infinite;
+}
+
+@keyframes bubble-moving{
+    from{
+        transform: translateX(300px) rotate(0deg);
+        }
+
+    to{
+        transform: translateX(-2000px) rotate(-2000deg);
+        }
+}
