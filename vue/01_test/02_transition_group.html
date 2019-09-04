@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../lib/vue.js"></script>
+    <style>
+        ul{
+            list-style: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        li{
+            width: 100%;
+            height: 50px;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+            line-height: 50px;
+            padding-left: 10px;
+            margin: 10px 0;
+        }
+
+        li:hover{
+            background-color: lightblue;
+            transform: scale(1.005);
+            transition: all 0.3s ease;
+        }
+
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateY(80px);
+        }
+
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.8s ease;
+        }
+
+        .v-move{
+            transition: all 0.8s ease;
+        }
+
+        .v-leave-active{
+            position: absolute;
+        }
+    </style>
+    <title>Vue Test</title>
+</head>
+<body>
+    <div id="app">
+        id: <input type="text" v-model="id" name="id">
+        name: <input type="text" v-model="name" name="name">
+        <input type="submit" value="添加" @click="addBook">
+        <transition-group appear tag="ul">
+            <li v-for="(item, index) in books" :key="item.id" @click=delBook(index)>
+                {{ item.id }} ------ {{ item.name }}
+            </li>
+        </transition-group>
+    </div>
+    <script>
+        var mv = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                books:[
+                    {id: 1, name: "严嵩"},
+                    {id: 2, name: "魏忠贤"},
+                    {id: 3, name: "秦桧"},
+                    {id: 4, name: "李斯"},
+                ],
+            },
+            methods: {
+                addBook(){
+                    this.books.push({id: this.id, name: this.name});
+                    this.id = "";
+                    this.name = "";
+                },
+                delBook(index){
+                    this.books.splice(index, 1);
+                },
+            },
+        });
+    </script>
+</body>
+</html>
