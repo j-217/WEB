@@ -1,10 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-// vue-loader 15+需要添加vueLoaderPlugin实例
-// const VueLoaderPlugin = require('vue-loader/lib/plugin')
-// 或
-const { VueLoaderPlugin } = require('vue-loader')
-
 /*
  * SplitChunksPlugin is enabled by default and replaced
  * deprecated CommonsChunkPlugin. It automatically identifies modules which
@@ -19,7 +14,7 @@ const { VueLoaderPlugin } = require('vue-loader')
  */
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const { VueLoaderPlugin } = require('vue-loader');
 /*
  * We've enabled HtmlWebpackPlugin for you! This generates a html
  * page for you when you compile webpack, which will make you start
@@ -28,18 +23,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  * https://github.com/jantimon/html-webpack-plugin
  *
  */
+
 module.exports = {
 	mode: 'development',
+
 	entry: './src/index.js',
 
 	output: {
-		filename: 'bundle.js',
+		filename: '[name].[chunkhash].js',
 		path: path.resolve(__dirname, 'dist')
 	},
 
 	plugins: [
 			new webpack.ProgressPlugin(), 
-			new HtmlWebpackPlugin({template:'./src/index.html'}),
+			new HtmlWebpackPlugin({template: './src/index.html'}),
 			new VueLoaderPlugin()
 		],
 
@@ -51,9 +48,7 @@ module.exports = {
 				loader: 'babel-loader',
 
 				options: {
-					plugins: [
-						'syntax-dynamic-import'
-					],
+					plugins: ['syntax-dynamic-import'],
 
 					presets: [
 						[
@@ -65,19 +60,26 @@ module.exports = {
 					]
 				}
 			},
-			// 配置加载css文件loader
+			{
+				test: /\.vue$/,
+				use: 'vue-loader',
+			},
 			{
 				test: /\.css$/,
 				use: ['style-loader', 'css-loader'],
 			},
-			// 配置加载vue文件loader
+			// 字体文件loader
 			{
-				test: /\.vue$/,
-				use: ['vue-loader'],
+				test: /\.(ttf|woff|woff2|svg|eot)$/,
+				use: 'url-loader',
 			},
 			{
 				test: /\.less$/,
 				use: ['style-loader', 'css-loader', 'less-loader'],
+			},
+			{
+				test: /\.(jpg|png|jpeg|gif)$/,
+				use: 'url-loader',
 			}
 		]
 	},
