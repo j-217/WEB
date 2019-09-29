@@ -1,0 +1,12 @@
+.movieSubject > .detail {
+  margin-top: 10px;
+  text-align: center;
+}
+.movieSubject > .detail > img {
+  height: 300px;
+  width: 300px;
+}
+.movieSubject > .detail > h4,
+.movieSubject > .detail p {
+  text-align: left;
+}

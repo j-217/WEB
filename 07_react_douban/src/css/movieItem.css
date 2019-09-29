@@ -1,0 +1,33 @@
+.movieItem {
+  width: 15%;
+  text-align: center;
+  border: 1px solid #ddd;
+  margin: 5px;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px #ddd;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  min-width: 100px;
+}
+.movieItem .details {
+  text-align: left;
+  margin: 5px 0 0 8px;
+}
+.movieItem .details h4,
+.movieItem .details h5 {
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.movieItem > img {
+  height: 140px;
+  width: 100px;
+}
+.movieItem:hover {
+  transform: rotateZ(1deg) scale(1.03);
+  opacity: 0.9;
+}
+.movieItem Rate {
+  font-size: 3px;
+}

@@ -1,0 +1,36 @@
+.movieItem{
+    width: 15%;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 5px;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px #ddd;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    min-width: 100px;
+
+    .details{
+        text-align: left;
+        margin: 5px 0 0 8px;
+        h4, h5{
+            text-overflow: ellipsis;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+
+    >img{
+        height: 140px;
+        width: 100px;
+    }
+
+    &:hover{
+        transform: rotateZ(1deg) scale(1.03);
+        opacity: 0.9;
+    }
+
+    Rate{
+        font-size: 3px;
+    }
+}
