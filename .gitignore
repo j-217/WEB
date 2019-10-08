@@ -1,4 +1,19 @@
-webpack_study
+# Windows
+[Dd]esktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# nodeJs
 node_modules
+
+# others
 vue
 react
+webpack_study
