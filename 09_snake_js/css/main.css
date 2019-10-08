@@ -1,0 +1,93 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: YouYuan;
+}
+
+
+#startPage{
+    width: 800px;
+    height: 600px;
+    background-color: purple;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 300;
+}
+
+
+#startOption{
+    width: 400px;
+    height: 300px;
+    background-color: lightblue;
+    position: absolute;
+    left: 200px;
+    top:100px;
+}
+
+
+#gameLogo{
+    width: auto;
+    height: 180px;
+    background-color: yellow;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../static/logo.png);
+}
+
+#options{
+    width: 400px;
+    height: 120px;
+    position: absolute;
+}
+
+#level{
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+}
+
+#level select{
+    border: 1px solid #94c1e7;
+    font-size: 12px;
+}
+
+#startButton{
+    height: 60px;
+    text-align: center;
+    line-height: 40px
+}
+
+#startButton a{
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
+
+#map{
+    width: 800px;
+    height: 600px;
+    background-color: lightgrey;
+    opacity: 50%;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    overflow: hidden;
+}
+
+
+#over{
+    height: 150px;
+    width: 200px;
+    position: absolute;
+    left: 300px;
+    top: 225px;
+    text-align: center;
+    line-height: 150px;
+    border:2px solid black;
+    display: none;
+    z-index: 400;
+}
+

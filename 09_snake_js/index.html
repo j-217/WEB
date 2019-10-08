@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Snake</title>
+</head>
+<body>
+    <div id="startPage">
+        <div id="startOption">
+            <div id="gameLogo"></div>
+            <div id="options">
+                <div id="level">
+                    <span >Game Level : </span>
+                    <select id="speedOptions" required="required">
+                        <option value="150">Slow</option>
+                        <option value="100" selected="selected">Nomal</option>
+                        <option value="50">Fast</option>
+                        <option value="10">Flash</option>
+                    </select>
+                </div>
+                <div id="startButton">
+                    <a id="start" href="javascript:void(0)">Start</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <div id="over">
+        <p>Game Over</p>
+    </div>
+    <script src="js/tools.js"></script>
+    <script src="js/food.js"></script>
+    <script src="js/snake.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
