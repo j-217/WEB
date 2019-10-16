@@ -107,6 +107,11 @@ a {
   line-height: 23px;
   background: 0 0!important;
 }
+
+.regi_form_input .regi_login_input_left_10{
+  left: 10px;
+}
+
 .md-title{
   position: absolute;
   top: 14px;

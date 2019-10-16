@@ -17,6 +17,7 @@
         <!--<a href="/" class="navbar-link">我的账户</a>-->
         <span class="navbar-link"></span>
         <a href="javascript:void(0)" class="navbar-link" v-show="!nickName" @click="showLoginBox">Login</a>
+        <a href="javascript:void(0)" class="navbar-link" v-show="!nickName" @click="signupBoxFlag = true">Sign Up</a>
         <a href="javascript:void(0)" class="navbar-link" v-show="nickName">{{ nickName }}</a>
         <a href="javascript:void(0)" class="navbar-link" v-show="nickName" @click="sendLogout">Logout</a>
         <div class="navbar-cart-container">
@@ -31,6 +32,7 @@
     </div>
   </div>
 
+  <!-- login -->
   <div class="md-modal modal-msg md-modal-transition" :class="{'md-show': coverFlag}" >
     <div class="md-modal-inner">
       <div class="md-top">
@@ -45,11 +47,11 @@
           <ul>
             <li class="regi_form_input">
               <i class="icon IconPeople"></i>
-              <input type="text" name="loginname" v-model="userName" class="regi_login_input regi_login_input_left" placeholder="User Name">
+              <input type="text" name="loginname" v-model="userName" class="regi_login_input" placeholder="User Name">
             </li>
             <li class="regi_form_input noMargin">
               <i class="icon IconPwd"></i>
-              <input type="password" name="password" v-model="userPwd" class="regi_login_input regi_login_input_left login-input-no input_text" placeholder="Password" @keyup.enter="sendLogin">
+              <input type="password" name="password" v-model="userPwd" class="regi_login_input login-input-no input_text" placeholder="Password" @keyup.enter="sendLogin">
             </li>
           </ul>
         </div>
@@ -59,11 +61,42 @@
       </div>
     </div>
   </div>
-  <div class="md-overlay" v-show="coverFlag" @click="cancelCover"></div>
+  <!-- sign up -->
+  <div class="md-modal modal-msg md-modal-transition" :class="{'md-show': signupBoxFlag}" >
+    <div class="md-modal-inner">
+      <div class="md-top">
+        <div class="md-title">Sign Up</div>
+        <button class="md-close" @click="cancelCover">Close</button>
+      </div>
+      <div class="md-content">
+        <div class="confirm-tips">
+          <div class="error-wrap">
+            <span class="error" :class="{'error-show': showErrorFlag}">用户名或者密码错误</span>
+          </div>
+          <ul>
+            <li class="regi_form_input">
+              <i class="icon IconPeople"></i>
+              <input type="text" name="loginname" v-model="signupUserName" class="regi_login_input" placeholder="User Name">
+            </li>
+            <li class="regi_form_input noMargin">
+              <i class="icon IconPwd"></i>
+              <input type="password" name="password" v-model="signupUserPwd" class="regi_login_input login-input-no input_text" placeholder="Password">
+            </li>
+          </ul>
+        </div>
+        <div class="login-wrap">
+          <a href="javascript:;" class="btn-login" @click="sendSignup">注   册</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="md-overlay" v-show="coverFlag || signupBoxFlag" @click="cancelCover"></div>
+
 </header>
 </template>
 <script>
   import './../assets/css/login.css'
+
   import axios from 'axios'
 
   export default {
@@ -72,7 +105,10 @@
         showErrorFlag: false,
         coverFlag: false,
         userName: '',
-        userPwd: ''
+        userPwd: '',
+        signupBoxFlag: false,
+        signupUserName: '',
+        signupUserPwd: '',
       }
     },
 
@@ -88,7 +124,8 @@
 
     methods: {
       cancelCover(){
-        this.coverFlag = false
+        this.coverFlag = false;
+        this.signupBoxFlag = false;
       },
 
       showLoginBox(){
@@ -143,6 +180,7 @@
                     if(res.status === '0'){
                         // 存在cookies
                         this.coverFlag = false;
+                        this.signupBoxFlag = false;
                         this.$store.commit('getNickName', res.result.userName);
                         this.$store.commit('getCartCount', res.result.cartCount);
                     }else{
@@ -153,7 +191,23 @@
                 })
         },
 
-
+      sendSignup(){
+        let params = {
+          signupUserName: this.signupUserName,
+          signupUserPwd: this.signupUserPwd
+        };
+        axios.post('/users/signup', params)
+          .then((response)=>{
+            let res = response.data;
+            if(res.status === '0'){
+              this.signupBoxFlag = false;
+              this.signupUserName = '';
+              this.signupUserPwd = '';
+            }else if(res.status === '2'){
+              console.log('注册失败')
+            }
+          })
+      },
     },
 
     mounted() {

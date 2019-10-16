@@ -76,7 +76,7 @@
                   </div>
                   <div class="addr-opration addr-default" v-if="item.isDefault">Default address</div>
                 </li>
-                <li class="addr-new">
+                <li class="addr-new" @click="addAddressInfoFlag = true">
                   <div class="add-new-inner">
                     <i class="icon-add">
                       <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
@@ -122,6 +122,37 @@
             <router-link class="btn btn--m btn--red" :to="{path: '/orderConfirm', query: {'addressId': selectedAddressId}}">Next</router-link>
           </div>
         </div>
+        <!--    add addressInfo    -->
+        <div class="md-modal modal-msg md-modal-transition" :class="{'md-show': addAddressInfoFlag}">
+          <div class="md-modal-inner">
+            <div class="md-top">
+              <div class="md-title">Add Address Info</div>
+              <button class="md-close" @click="addAddressInfoFlag = false">Close</button>
+            </div>
+            <div class="md-content">
+              <div class="confirm-tips">
+                <ul>
+                  <li class="regi_form_input">
+                    <input type="text" name="addressUserName" v-model="addressUserName" class="regi_login_input regi_login_input_left_10" placeholder="User Name">
+                  </li>
+                  <li class="regi_form_input">
+                    <input type="text" name="addressStreetName" v-model="addressStreetName" class="regi_login_input regi_login_input_left_10" placeholder="Street Name">
+                  </li>
+                  <li class="regi_form_input">
+                    <input type="text" name="addressPostCode" v-model="addressPostCode" class="regi_login_input regi_login_input_left_10" placeholder="Post Code">
+                  </li>
+                  <li class="regi_form_input">
+                    <input type="text" name="addressTel" v-model="addressTel" class="regi_login_input regi_login_input_left_10" placeholder="Tel">
+                  </li>
+                </ul>
+              </div>
+              <div class="login-wrap">
+                <a href="javascript:void(0);" class="btn-login" @click="addAddress">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="md-overlay" v-show="addAddressInfoFlag" @click="addAddressInfoFlag = false"></div>
       </div>
     </div>
     <module :mdShow="mdDeleteAddressConfirmFlag" @closeModule="closeModule">
@@ -155,6 +186,11 @@
         mdDeleteAddressConfirmFlag: false,
         selectedAddressId: null,
         addressId: null,
+        addAddressInfoFlag: false,
+        addressUserName: '',
+        addressStreetName: '',
+        addressPostCode: '',
+        addressTel: '',
       }
     },
 
@@ -230,6 +266,29 @@
           })
       },
 
+      addAddress(){
+        let params = {
+          addressUserName: this.addressUserName,
+          addressStreetName: this.addressStreetName,
+          addressPostCode: this.addressPostCode,
+          addressTel: this.addressTel
+        };
+        axios.post('/users/addAddress', params)
+          .then((response)=>{
+            let res = response.data;
+            if(res.status === '0'){
+              console.log("添加地址成功");
+              this.addAddressInfoFlag = false;
+              this.addressUserName = '';
+              this.addressStreetName = '';
+              this.addressPostCode = '';
+              this.addressTel = '';
+              this.addressList = res.result.addressList;
+            }else{
+              console.log("添加地址失败")
+            }
+          })
+      },
 
     },
 

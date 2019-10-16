@@ -5,7 +5,7 @@ var Goods = require('../models/goods');
 var Users = require('../models/users');
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_imooc_shopping_mall', {useNewUrlParser: true, useUnifiedTopology: true})
-  .then(()=>{console.log('Connection Successful')})
+  .then(()=>{console.log('Goods Connection Successful')})
   .catch((err)=>{console.log(err)});
 
 // 获取商品信息

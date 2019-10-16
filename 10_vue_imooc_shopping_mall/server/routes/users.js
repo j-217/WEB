@@ -5,7 +5,7 @@ const Users = require('../models/users');
 require('../utils/util');
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_imooc_shopping_mall', {useNewUrlParser:true, useUnifiedTopology: true})
-  .then(() => {console.log("Connection Successful")})
+  .then(() => {console.log("Users Connection Successful")})
   .catch((err) => {console.log(err)});
 
 /* GET users listing. */
@@ -172,6 +172,56 @@ router.get('/getOrderInfo', function (req, res, next) {
 
 
 /* POST */
+
+// 用户注册
+router.post('/signup', function (req, res, next) {
+  let userName = req.body.signupUserName;
+  Users.find({"userName": userName}, function (err, docs) {
+    if(err){
+      console.log(`发生错误: ${err}`);
+      res.json({
+        status: "1",
+        msg: err.message,
+        result: {}
+      })
+    }else if(docs.length > 0){
+      console.log(`已被占用`);
+      res.json({
+        status: "2",
+        msg: "该用户名已注册",
+        result: {}
+      })
+    }else if(docs.length === 0){
+      console.log("可以注册");
+      Users.countDocuments(function (err, doc) {
+        let totalUsers = 100000000 + doc + 1;
+        let newUserObj = {
+          "userId": totalUsers + "",
+          "userName": userName,
+          "userPwd": req.body.signupUserPwd,
+          "orderList": [],
+          "cartList": [],
+          "addressList": []
+        };
+        Users.insertMany(newUserObj, function (err, doc) {
+          if(err){
+            res.json({
+              status: "1",
+              msg: err.message,
+              result: {}
+            })
+          }else if(doc){
+            res.json({
+              status: "0",
+              msg: "注册成功",
+              result: {}
+            })
+          }
+        })
+      });
+    }
+  });
+});
 
 // 用户登录
 router.post('/login', function (req, res, next) {
@@ -373,6 +423,51 @@ router.post('/deleteAddress', function (req, res, next) {
   }
 });
 
+// 添加收获地址
+router.post('/addAddress', function (req, res, next) {
+  console.log("1: " + req.cookies);
+  if(req.cookies.userId){
+    Users.findOne({"userId": req.cookies.userId}, function (err, doc) {
+      if(err){
+        res.json({
+          status: "1",
+          msg: err.message,
+          result: {}
+        })
+      }else{
+        let newAddressId = 100000 + doc.addressList.length + 1;
+        let newAddressObj = {
+          "addressId": newAddressId,
+          "userName": req.body.addressUserName,
+          "streetName": req.body.addressStreetName,
+          "postCode": req.body.addressPostCode,
+          "tel": req.body.addressTel,
+          "isDefault": false
+        };
+        doc.addressList.push(newAddressObj);
+        doc.save(function (err, doc2) {
+          if(err){
+            res.json({
+              status: "1",
+              msg: err.message,
+              result: {}
+            })
+          }else{
+            res.json({
+              status: "0",
+              msg: "",
+              result: {
+                addressList: doc2.addressList,
+              }
+            })
+          }
+        })
+      }
+    })
+  }
+});
+
+// 完成订单
 router.post('/payOrder', function (req, res, next) {
   if(req.cookies.userId){
     let addressId = req.body.addressId,
