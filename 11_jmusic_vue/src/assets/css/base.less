@@ -1,0 +1,59 @@
+// reset
+body,
+div,
+span,
+header,
+footer,
+section,
+aside,
+article,
+ul,
+dl,
+dt,
+dd,
+li,
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+i,
+b,
+em,
+textarea,
+button,
+input,
+select {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-style: normal;
+  text-decoration: none;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+// 遮盖层
+.mask{
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.mask-show{
+  visibility: visible;
+}
+
+// 颜色变量
+@lightFontColor: #c8c7cc;
+@darkFontColor: #252525;
+@activeFontColor: #c7210C;
