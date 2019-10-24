@@ -11,4 +11,6 @@ export default {
   playMode: 'order',
   // 当前播放音乐
   curMusic: '',
+  // 显示歌词
+  showLyricFlag: false,
 }

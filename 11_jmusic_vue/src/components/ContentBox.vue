@@ -5,7 +5,7 @@
       <span>更多</span>
     </div>
     <ul class="item-list">
-      <li class="item" v-for="item in (itemList.recommend || itemList.albums)" :key="item.id">
+      <li class="item" v-for="item in (itemList.recommend || itemList.albums)" :key="item.id" @click="goDetailPage(itemList.type, item.id)">
         <div class="image-fillet">
           <img :src="item.picUrl" alt="">
           <span class="playcount" v-if="item.playcount">{{ item.playcount | formatNumber }}</span>
@@ -25,6 +25,25 @@ export default {
 
   filters: {
     formatNumber,
+  },
+
+  methods: {
+    goDetailPage(type, id){
+      switch(type){
+        case 'album':
+          this.$store.dispatch('getAlbumDetail', id)
+          this.$router.push({
+            name: 'albumDetail'
+          })
+          break
+        case 'songsList':
+          this.$store.dispatch('getSongsListDetail', id)
+          this.$router.push({
+            name: 'songsListDetail'
+          })
+          break
+      }
+    }
   }
 }
 </script>
@@ -72,13 +91,21 @@ export default {
           >span{
             position: absolute;
             top: 0.1rem;
-            right: 0.1rem;
+            right: 0.2rem;
             color: #fff;
-            font-size: small;
+            font-size: 0.8rem;
             &::before{
               content: '▶ '
             }
           }
+          // &::before{
+          //   content: '';
+          //   position: absolute;
+          //   display: block;
+          //   width: 100%;
+          //   height: 1.5rem;
+          //   background-image: linear-gradient(180deg, rgba(100, 100, 100, 0.8) -10%, rgba(230, 230, 230, 0) 80%)
+          // }
         }
         .name{
           max-width: 100%;

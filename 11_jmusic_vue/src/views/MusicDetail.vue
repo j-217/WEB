@@ -1,23 +1,10 @@
 <template>
   <div class="music-detail-page" :style="`background-image: url(${musicPicUrl})`">
     <!-- header -->
-    <div class="header">
-      <div class="header-flex">
-        <div class="left" @click="onClickLeft">
-          <van-icon name="arrow-left" />
-        </div>
-        <div class="title-box">
-          <div class="title">{{ musicName }}</div>
-          <div class="singer">{{ musicArtist }}</div>
-        </div>
-        <div class="right">
-          <van-icon name="ellipsis" />
-        </div>
-      </div>
-    </div>
+    <common-header :title='musicName' :info="musicArtist"></common-header>
     <!-- body -->
-    <div class="body">
-      <div class="record-player">
+    <div class="body" @click="switchLyricFlag(showLyricFlag)">
+      <div class="record-player" v-if="!showLyricFlag">
         <img src="@/assets/images/play-controler.png" alt="" class="niddle" :class="{'active': playStatusFlag}">
         <div class="cd-wrap" :class="{'active': playStatusFlag}">
           <div class="img-wrap">
@@ -25,8 +12,18 @@
           </div>
         </div>
       </div>
-      <div class="lyric"></div>
-      
+      <div class="lyric" v-if="showLyricFlag">
+        <div class="wrap">
+          <ul class="lyric-box" ref="lyricBoxElement">
+            <li class="lyric-line-box" 
+                v-for="(item, index) in lyricList" :key="index"
+                :class="{'active': index === curLine}"
+            >
+              <span class="line ">{{ item.line }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
       
     <!-- footer -->
@@ -66,17 +63,19 @@
 						<span>歌曲数量({{ playlist.length }})</span>
 						<span><van-icon name="delete" /></span>
 					</div>
-					<ul class="songs-list">
-						<li class="songs-list-item" v-for="(item, index) in playlist" :key="index" @click="goSwitchSongs('noChange', item.id)">
-							<div class="song-info" :class="{'active': item.id === curMusic}">
-								<span class="play-icon"><van-icon name="volume-o" /></span>
-								<span class="song-name">{{ item.name }}</span>
-								<span>-</span>
-								<span class="singer">{{ item.artists[0].name }}</span>
-							</div>
-							<span><van-icon name="cross" /></span>
-						</li>
-					</ul>
+          <div class="overflow-wrap">
+            <ul class="songs-list">
+              <li class="songs-list-item" v-for="(item, index) in playlist" :key="index" @click="goSwitchSongs('noChange', item.id)">
+                <div class="song-info" :class="{'active': item.id === curMusic}">
+                  <span class="play-icon"><van-icon name="volume-o" /></span>
+                  <span class="song-name">{{ item.name }}</span>
+                  <span>-</span>
+                  <span class="singer">{{ item.artists ? item.artists[0].name : item.ar[0].name }}</span>
+                </div>
+                <span><van-icon name="cross" /></span>
+              </li>
+            </ul>
+          </div>
 				</div>
 			</div>
 		</transition>
@@ -88,15 +87,22 @@
 import { mapState, mapGetters } from 'vuex'
 import { formatTime } from '../utils/utils'
 
+import CommonHeader from '../components/CommonHeader'
+
 export default {
   data(){
     return{
       showList: false,
+      curLine: 0,
     }
   },
 
   filters: {
     formatTime,
+  },
+
+  components: {
+    CommonHeader,
   },
 
   computed: {
@@ -109,15 +115,18 @@ export default {
       musicCurTime: state => state.music.musicCurTime,
       musicDuration: state => state.music.musicDuration,
       playMode: state => state.player.playMode,
+      showLyricFlag: state => state.player.showLyricFlag,
     }),
     ...mapGetters({
       playlist: 'playlistFilteDuplicate',
+      lyricList: 'getFormatLyric'
     })
   },
 
   methods: {
-    onClickLeft(){
-      this.$router.back()
+    switchLyricFlag(flag){
+      let newFlag = !flag
+      this.$store.commit('setShowLyricFlag', newFlag)
     },
 
     playOrPause(flag){
@@ -137,7 +146,37 @@ export default {
       if(switchMode !== 'noChange'){
         this.$store.commit('setSwitchMode', switchMode)
       }
+      this.curLine = 0
+      console.log(this.curLine)
+      if(this.$store.state.player.showLyricFlag){
+        this.$refs.lyricBoxElement.style.top = '10rem'
+      }
       this.$store.dispatch('switchSongs', musicId)
+    }
+  },
+
+  watch: {
+    musicCurTime(newVal, oldVal){
+      let lyricList = this.$store.getters.getFormatLyric,
+        musicDuration = this.$store.state.music.musicDuration,
+        lyricBoxElement = this.$refs.lyricBoxElement
+      // 开启歌词显示才计算
+      if(this.$store.state.player.showLyricFlag){
+        for(let i = 0;i < lyricList.length - 2; i++ ){
+          if(newVal >= lyricList[i].time && newVal < lyricList[i+1].time){
+            this.curLine = i
+            let curLineElement = document.getElementsByClassName("lyric-line-box active")[0]
+            if(curLineElement.offsetTop > 120){
+              lyricBoxElement.style.top = `${10 - (curLineElement.offsetTop / 16)}rem`
+            }
+            return
+          }
+        }
+      }
+      // 播放完成重置歌词位置
+      if(newVal === musicDuration ){
+        lyricBoxElement.style.top = '10rem'
+      } 
     }
   }
 }
@@ -148,18 +187,17 @@ export default {
 .music-detail-page{
   position: fixed;
   width: 100%;
-  height: 200rem;
-  background: url(../assets/images/default.jpg);
-  background-size: cover;
+  height: 100%;
   z-index: -2;
   &::after{
     content: '';
-    height: 30%;
-    width: 100%;
+    height: 150%;
+    width: 150%;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -5%;
+    left: -5%;
     background: inherit;
+    background-size: cover;
     filter: blur(1rem);
     z-index: -1;
   }
@@ -208,6 +246,39 @@ export default {
         }
       }
     }
+    .lyric{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 5rem 1rem;
+      overflow: hidden;
+      .wrap{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        .lyric-box{
+          transition: top 1s linear;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          top: 10rem;
+          text-align: center;
+          font-size: large;
+          color: #eee;
+          .lyric-line-box{
+            transform: translateZ(0);
+            padding: 0.5rem 0;
+            &.active{
+              color: #c7210C;
+            }
+          }
+        }
+      }
+     
+    }
   }
   .footer{
     transform: translateZ(0);
@@ -218,6 +289,7 @@ export default {
     padding: 0.5rem 1rem;
     font-size: xx-large;
     color: #fff;
+    z-index: 15;
     .footer-flex{
       display: flex;
       justify-content: space-between;
@@ -240,33 +312,6 @@ export default {
       }
     }
   }
-  .header{
-    transform: translateZ(0);
-    position: fixed;
-    top: 0;
-    height: 3rem;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    color: #fff;
-    font-size: xx-large;
-    .header-flex{
-      display: flex;
-      justify-content: space-between;
-      .left{
-        padding-right: 1.5rem;
-      }
-      .title-box{
-        width: 80%;
-        font-size: large;
-        .singer{
-          font-size: small;
-        }
-      }
-      .right{
-        padding-left: 1.5rem;
-      }
-    }
-  }
 }
 
 .my-songs-list-fixed{
@@ -281,6 +326,7 @@ export default {
   .my-songs-list-wrap{
     display: flex;
     flex-direction: column;
+    height:100%;
     .songs-list-header{
       display: flex;
       justify-content: space-between;
@@ -290,48 +336,52 @@ export default {
         font-size: large;
       }
     }
-    .songs-list{
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      .songs-list-item{
+    .overflow-wrap{
+      height:100%;
+      overflow-y:scroll;
+       .songs-list{
         display: flex;
-        justify-content: space-between;
-        padding-top: 0.5rem;
-        >span{
-          color: @lightFontColor;
-          font-size: large;
-        }
-        .song-info{
+        flex-direction: column;
+        justify-content: space-evenly;
+        .songs-list-item{
           display: flex;
-          width: 90%;
-          align-items: flex-end;
-          >span:nth-of-type(3){
-            padding: 0 0.3rem;
+          justify-content: space-between;
+          padding-top: 0.5rem;
+          >span{
+            color: @lightFontColor;
+            font-size: large;
           }
-          .play-icon{
-            display: none;
-          }
-          .song-name{
-            display: inline-block;
-            max-width: 50%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          .singer{
-            display: inline-block;
-            font-size: small;
-            max-width: 30%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          &.active{
-            color: @activeFontColor;
+          .song-info{
+            display: flex;
+            width: 90%;
+            align-items: flex-end;
+            >span:nth-of-type(3){
+              padding: 0 0.3rem;
+            }
             .play-icon{
+              display: none;
+            }
+            .song-name{
               display: inline-block;
-              padding-right: 0.5rem;
+              max-width: 50%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .singer{
+              display: inline-block;
+              font-size: small;
+              max-width: 30%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            &.active{
+              color: @activeFontColor;
+              .play-icon{
+                display: inline-block;
+                padding-right: 0.5rem;
+              }
             }
           }
         }
@@ -348,7 +398,7 @@ export default {
 
 .slide-up-enter-active,
 .slide-up-leave-active{
-  transition: transform 1s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }
 
 // 播放器动画
@@ -361,5 +411,4 @@ export default {
   }
 }
 
-  
 </style>

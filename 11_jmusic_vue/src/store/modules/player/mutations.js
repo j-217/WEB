@@ -22,5 +22,9 @@ export default {
   // 设置播放模式(随机、顺序、单曲)
   setPlayMode(state, payload){
     state.playMode = payload
-  }
+  },
+  // 设置显示歌词
+  setShowLyricFlag(state, payload){
+    state.showLyricFlag = payload
+  } 
 }

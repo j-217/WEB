@@ -5,6 +5,7 @@
       ref="player"
       @durationchange="setMusicDuration"
       @timeupdate="setMusicCurTime"  
+      @ended="goSwitchSongs(curMusic)"
     >
     </audio>
   </div>
@@ -25,7 +26,8 @@ import { mapState } from 'vuex'
     computed: {
       ...mapState({
         curMusicUrl: state => state.music.musicUrl,
-        playStatusFlag: state => state.player.playStatusFlag
+        playStatusFlag: state => state.player.playStatusFlag,
+        curMusic: state => state.player.curMusic,
       })
     },
 
@@ -34,7 +36,11 @@ import { mapState } from 'vuex'
         this.$store.commit('setMusicDuration', this.$refs.player.duration)
       },
       setMusicCurTime(){
-        this.$store.commit('setMusicCurTime', this.$refs.player.currentTime)
+        this.$store.commit('setMusicCurTime', this.$refs.player.currentTime) 
+      },
+      goSwitchSongs(musicId){
+        this.$store.commit('setPlayStatusFlag', false)
+        this.$store.dispatch('switchSongs', musicId)
       }
     },
 
@@ -49,7 +55,7 @@ import { mapState } from 'vuex'
 
       curMusicUrl(newVal, oldVal){
         // 首次载入时不自动播放
-        if(oldVal != '' && newVal != ''){
+        if(oldVal != ''){
           this.$nextTick(()=>{
             this.$store.commit('setPlayStatusFlag', true)
             this.$refs.player.play()

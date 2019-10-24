@@ -92,8 +92,11 @@ export default {
   },
 
   methods: {
-    // 初始化navFooter歌单，默认当前音乐为私人FM第一首
+    // 歌单为空初始化navFooter歌单，默认当前音乐为私人FM第一首
     initPlaylist(){
+      if(this.$store.state.player.playlist.length !== 0){
+        return
+      }
       getData('queryPersonalFM')
       .then((result)=>{
         if(result.code === 200){
@@ -153,9 +156,7 @@ export default {
 
 <style lang="less">
 .my-home-wrap{
-  height: 2000px;
-  background-color: lightblue;
-  padding: 3rem 1rem 0 1rem;
+  padding: 3rem 1rem;
   display: flex;
   flex-direction: column;
   .my-banner-box{

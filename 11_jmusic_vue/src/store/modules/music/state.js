@@ -21,4 +21,8 @@ export default {
   recommendSongsList: {},
   // 最新专辑（新碟）
   newAlbums: {},
+  // 歌单详情
+  songsListDetail: {},
+  // 专辑详情
+  albumDetail: {},
 }

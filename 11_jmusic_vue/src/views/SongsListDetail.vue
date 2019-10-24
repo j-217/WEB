@@ -1,33 +1,33 @@
 <template>
-  <div class="album-detail-box" :style="`background-image: url(${albumDetail.album.picUrl})`">
+  <div class="album-detail-box" :style="`background-image: url(${songsListDetail.playlist.coverImgUrl})`">
     <!-- header -->
     <common-header :title="title"></common-header>
     <!-- body -->
     <div class="body-box">
       <div class="info-box">
         <div class="pic-box">
-          <img :src="albumDetail.album.picUrl" alt="" class="pic">
+          <img :src="songsListDetail.playlist.coverImgUrl" alt="" class="pic">
         </div>
         <div class="info">
           <div class="flex-top">
             <div class="album-name">
-              <span>{{ albumDetail.album.name }}</span>
+              <span>{{ songsListDetail.playlist.name }}</span>
             </div>
             <div class="album-art">
-              <span>歌手：{{ albumDetail.album.artists[0].name }}</span>
+              <span>创建者：{{ songsListDetail.playlist.creator.nickname }}</span>
             </div>
           </div>
-          <div class="description">{{ albumDetail.album.description }}</div>
+          <div class="description">{{ songsListDetail.playlist.description }}</div>
         </div>
       </div>
       <div class="tab-bar-box">
         <div class="tab-bar-item">
           <van-icon name="chat-o" />
-          <span>{{ albumDetail.album.info.commentCount || 0 }}</span>
+          <span>{{ songsListDetail.playlist.commentCount || 0 }}</span>
         </div>
         <div class="tab-bar-item">
           <van-icon name="cluster-o" />
-          <span>{{ albumDetail.album.info.shareCount || 0 }}</span>
+          <span>{{ songsListDetail.playlist.shareCount || 0 }}</span>
         </div>
         <div class="tab-bar-item">
           <van-icon name="down" />
@@ -40,20 +40,20 @@
       </div>
       <div class="songslist-box">
         <div class="title-box">
-          <div class="play-all" @click="playAll(albumDetail.songs)">
+          <div class="play-all" @click="playAll(songsListDetail.playlist.tracks)">
             <van-icon name="play-circle-o" />
             <div class="song-counts">
               <span>播放全部</span>
-              <span>(共{{ albumDetail.album.size || 0 }}首)</span>
+              <span>(共{{ songsListDetail.playlist.trackCount || 0 }}首)</span>
             </div>
           </div>
           <div class="subsribed-counts">
-            <span>收藏({{ albumDetail.album.info.commentThread.hotCount || 0 }})</span>
+            <span>收藏({{ songsListDetail.playlist.subscribedCount || 0 }})</span>
           </div>
         </div>
         <div class="list-box">
           <ul class="songslist-items">
-            <li class="item" v-for="(item, index) in albumDetail.songs" :key="index" @click="goSwichSongs(item.id)">
+            <li class="item" v-for="(item, index) in songsListDetail.playlist.tracks" :key="index" @click="goSwichSongs(item.id)">
               <div class="song-info" :class="{'active': item.id === curMusic}">
                 <span class="play-icon"><van-icon name="volume-o" /></span>
                 <span class="song-name">{{ item.name }}</span>
@@ -78,7 +78,7 @@ import { mapState } from 'vuex'
 export default {
   data(){
     return {
-      title: '专辑',
+      title: '歌单',
     }
   },
 
@@ -89,7 +89,7 @@ export default {
 
   computed: {
     ...mapState({
-      albumDetail: state => state.music.albumDetail,
+      songsListDetail: state => state.music.songsListDetail,
       curMusic: state => state.player.curMusic,
     })
   },
@@ -98,7 +98,7 @@ export default {
     goSwichSongs(musicId){
       this.$store.dispatch('switchSongs', musicId)
     },
-    // 将专辑内歌曲替换至当前播放列表并播放第一首
+    // 将歌单内歌曲替换至当前播放列表并播放第一首
     playAll(newList){
       this.$store.commit('setPlaylist', newList)
       this.$store.dispatch('switchSongs', newList[0].id)

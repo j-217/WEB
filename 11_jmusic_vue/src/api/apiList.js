@@ -23,5 +23,10 @@ const apiList = {
     queryRecommendSongsList: '/recommend/resource',
     // 获取最新专辑
     queryNewAlbums: '/album/newest',
+
+    // 获取歌单详情
+    querySongsListDetail: '/playlist/detail',
+    // 获取专辑详情
+    queryAlbumDetail: '/album',
 };
 export default apiList

@@ -6,9 +6,9 @@ import api from './apiList'
 axios.defaults.withCredentials = true
 
 // 通过axios向api发送请求
-export default async (pathName, queryData) => {
+export default async (queryName, queryData) => {
     let baseUrl = 'http://localhost:3000';
-    let url = baseUrl.concat(api[pathName]);
+    let url = baseUrl.concat(api[queryName]);
     console.log(url)
     let result;
     if(queryData){

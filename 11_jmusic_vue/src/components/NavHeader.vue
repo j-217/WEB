@@ -29,33 +29,42 @@
       <!--   左侧滑出边栏     -->
       <div class="left-slide-box-wrap" v-if="showMaskFlag">
         <div class="left-slide-box">
-          <div class="user-info-box">
-            <div class="user-profile-round">
-              <img :src="userImgUrl" alt="">
+          <div class="has-login" v-if="nickName !== ''">
+            <div class="user-info-box">
+              <div class="user-profile-round">
+                <img :src="userImgUrl" alt="">
+              </div>
+              <div class="user-name-box">
+                <div class="user-name">{{ nickName }}</div>
+                <div class="sign-in-box">
+                  <van-icon name="points" size="1.2rem"/>
+                  <span>签到</span>
+                </div>
+              </div>
             </div>
-            <div class="user-name-box">
-              <div class="user-name">{{ nickName }}</div>
-              <div class="sign-in-box">
-                <van-icon name="points" size="1.2rem"/>
-                <span>签到</span>
+            <div class="user-footer">
+              <div class="user-footer-item">
+                <van-icon name="closed-eye" size="1.3rem"/>
+                <span>夜间模式</span>
+              </div>
+              <div class="user-footer-item">
+                <van-icon name="setting-o" size="1.3rem"/>
+                <span>设置</span>
+              </div>
+              <div class="user-footer-item" @click="queryLogout">
+                <van-icon name="share" size="1.3rem"/>
+                <span>退出</span>
               </div>
             </div>
           </div>
-
-          <div class="user-footer">
-            <div class="user-footer-item">
-              <van-icon name="closed-eye" size="1.3rem"/>
-              <span>夜间模式</span>
+          <div class="has-logout" v-if="nickName === ''">
+            <div class="confirm-login-box">
+              <div class="confirm-login-btn">
+                <van-button plain hairline type="info" to="login">请登录</van-button>
+                <van-button plain hairline type="primary">注册</van-button>
+              </div>
             </div>
-            <div class="user-footer-item">
-              <van-icon name="setting-o" size="1.3rem"/>
-              <span>设置</span>
-            </div>
-            <div class="user-footer-item" @click="queryLogout">
-              <van-icon name="share" size="1.3rem"/>
-              <span>退出</span>
-            </div>
-          </div>
+          </div>          
         </div>
       </div>
     </transition>
@@ -92,9 +101,10 @@ import { mapState } from 'vuex'
             // vuex 数据重置
             window.sessionStorage.removeItem('store')
             window.removeEventListener('beforeunload', ()=>{})
-            this.$router.push({
-              name: 'login'
-            })
+            window.location.reload()
+            // this.$router.push({
+            //   name: 'login'
+            // })
           })
       }
     }
@@ -108,7 +118,7 @@ import { mapState } from 'vuex'
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #eee;
+    background-color: #ffffff;
     z-index: 10;
     .my-nav-bar{
       height: 3rem;
@@ -153,57 +163,73 @@ import { mapState } from 'vuex'
     z-index: 101;
     background-color: #fff;
     .left-slide-box{
-      display: flex;
-      flex-direction: column;
       height: 100%;
-      justify-content: space-between;
-      padding: 0.5rem 1rem;
-
-      .user-info-box{
+      width: 100%;
+      .has-login{
         display: flex;
         flex-direction: column;
+        height: 100%;
         justify-content: space-between;
-        .user-profile-round{
-          margin-top: 2rem;
-          margin-bottom: 1rem;
-          height: 7rem;
-          width: 7rem;
-          border-radius: 50%;
-          overflow: hidden;
-          >img{
-            width: 100%;
-            height: 100%;
+        padding: 0.5rem 1rem;
+        .user-info-box{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .user-profile-round{
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            height: 7rem;
+            width: 7rem;
+            border-radius: 50%;
+            overflow: hidden;
+            >img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .user-name-box{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: large;
+            .sign-in-box{
+              background-color: @activeFontColor;
+              padding: 0.3rem 1rem;
+              border-radius: 1rem;
+              font-size: small;
+              color: #ffffff;
+              display: flex;
+              text-align: center;
+              >span{
+                margin-left: 0.2rem;
+              }
+            }
           }
         }
-        .user-name-box{
+        .user-footer{
           display: flex;
           justify-content: space-between;
-          align-items: center;
-          font-size: large;
-          .sign-in-box{
-            background-color: @activeFontColor;
-            padding: 0.3rem 1rem;
-            border-radius: 1rem;
-            font-size: small;
-            color: #ffffff;
+          color: #0f0f0f;
+          .user-footer-item{
             display: flex;
-            text-align: center;
+            justify-content: space-between;
+            align-items: center;
             >span{
-              margin-left: 0.2rem;
+              margin-left: 0.5rem;
             }
           }
         }
       }
-      .user-footer{
-        display: flex;
-        justify-content: space-between;
-        color: #0f0f0f;
-        .user-footer-item{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          >span{
-            margin-left: 0.5rem;
+      .has-logout{
+        height: 100%;
+        width: 100%;
+        .confirm-login-box{
+          position: relative;
+          top: 30%;
+          .confirm-login-btn{
+            width: 100%;
+            display: flex;
+            flex-direction: column;        
           }
         }
       }
@@ -218,7 +244,7 @@ import { mapState } from 'vuex'
 
   .slide-right-enter-active,
   .slide-right-leave-active{
-    transition: transform 1s ease-in-out;
+    transition: transform 0.6s ease-in-out;
   }
 
 </style>

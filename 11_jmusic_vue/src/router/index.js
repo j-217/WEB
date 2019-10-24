@@ -27,14 +27,25 @@ const routes = [
     name: 'musicDetail',
     component: () => import('../views/MusicDetail.vue')
   },
+  {
+    path: '/albumDetail',
+    name: 'albumDetail',
+    component: () => import('../views/AlbumDetail.vue')
+  },
+  {
+    path: '/songsListDetail',
+    name: 'songsListDetail',
+    component: () => import('../views/SongsListDetail.vue')
+  },
 ]
 
 const router = new VueRouter({
   routes
 })
 
-// 用户登录验证
+// 用户登录验证（废除）
 // router.beforeEach((to, from, next)=>{
+//   console.log(this)
 //   getData('queryLoginStatus')
 //       .then((result)=>{
 //         if(result.code === 200){

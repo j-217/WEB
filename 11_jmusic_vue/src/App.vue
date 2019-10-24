@@ -20,8 +20,7 @@ import Player from './components/Player'
       // 确认登录状态
       let cookies = document.cookie.split(';')
       if(cookies.includes(" __remember_me=true")){
-        console.log("logged in")
-      
+        console.log("logged in") 
       }else{
         sessionStorage.removeItem('store')
         console.log('logged out')

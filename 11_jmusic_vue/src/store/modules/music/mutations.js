@@ -30,5 +30,13 @@ export default {
   // 设置最新专辑
   setNewAlbums(state, payload){
     state.newAlbums = payload
+  },
+  // 设置专辑详情
+  setAlbumDetail(state, payload){
+    state.albumDetail = payload
+  },
+  // 设置歌单详情
+  setSongsListDetail(state, payload){
+    state.songsListDetail = payload
   }
 }

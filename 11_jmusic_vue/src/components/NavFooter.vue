@@ -32,18 +32,20 @@
 					<div class="songs-list-header">
 						<span>歌曲数量({{ playlist.length }})</span>
 						<span><van-icon name="delete" /></span>
+					</div>	
+					<div class="overflow-wrap">
+						<ul class="songs-list">
+							<li class="songs-list-item" v-for="(item, index) in playlist" :key="index" @click="goSwichSongs(item.id)">
+								<div class="song-info" :class="{'active': item.id === curMusic}">
+									<span class="play-icon"><van-icon name="volume-o" /></span>
+									<span class="song-name">{{ item.name }}</span>
+									<span>-</span>
+									<span class="singer">{{ item.artists ? item.artists[0].name : item.ar[0].name }}</span>
+								</div>
+								<span><van-icon name="cross" /></span>
+							</li>
+						</ul>
 					</div>
-					<ul class="songs-list">
-						<li class="songs-list-item" v-for="(item, index) in playlist" :key="index" @click="goSwichSongs(item.id)">
-							<div class="song-info" :class="{'active': item.id === curMusic}">
-								<span class="play-icon"><van-icon name="volume-o" /></span>
-								<span class="song-name">{{ item.name }}</span>
-								<span>-</span>
-								<span class="singer">{{ item.artists[0].name }}</span>
-							</div>
-							<span><van-icon name="cross" /></span>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</transition>
@@ -113,7 +115,7 @@ import { mapState, mapGetters } from 'vuex'
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #eee;
+    background-color: #fff;
 		padding: 0 0.5rem;
 		z-index: 10;
     .my-nav-footer{
@@ -165,6 +167,7 @@ import { mapState, mapGetters } from 'vuex'
 		.my-songs-list-wrap{
 			display: flex;
 			flex-direction: column;
+			height: 100%;
 			.songs-list-header{
 				display: flex;
 				justify-content: space-between;
@@ -174,53 +177,58 @@ import { mapState, mapGetters } from 'vuex'
 					font-size: large;
 				}
 			}
-			.songs-list{
-				display: flex;
-				flex-direction: column;
-				justify-content: space-evenly;
-				.songs-list-item{
+			.overflow-wrap{
+				height: 100%;
+				overflow-y: scroll;
+				.songs-list{
 					display: flex;
-					justify-content: space-between;
-					padding-top: 0.5rem;
-					>span{
-						color: @lightFontColor;
-						font-size: large;
-					}
-					.song-info{
+					flex-direction: column;
+					justify-content: space-evenly;
+					.songs-list-item{
 						display: flex;
-						width: 90%;
-						align-items: flex-end;
-						>span:nth-of-type(3){
-							padding: 0 0.3rem;
+						justify-content: space-between;
+						padding-top: 0.5rem;
+						>span{
+							color: @lightFontColor;
+							font-size: large;
 						}
-						.play-icon{
-							display: none;
-						}
-						.song-name{
-							display: inline-block;
-							max-width: 50%;
-							white-space: nowrap;
-							overflow: hidden;
-							text-overflow: ellipsis;
-						}
-						.singer{
-							display: inline-block;
-							font-size: small;
-							max-width: 30%;
-							white-space: nowrap;
-							overflow: hidden;
-							text-overflow: ellipsis;
-						}
-						&.active{
-							color: @activeFontColor;
+						.song-info{
+							display: flex;
+							width: 90%;
+							align-items: flex-end;
+							>span:nth-of-type(3){
+								padding: 0 0.3rem;
+							}
 							.play-icon{
+								display: none;
+							}
+							.song-name{
 								display: inline-block;
-								padding-right: 0.5rem;
+								max-width: 50%;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+							}
+							.singer{
+								display: inline-block;
+								font-size: small;
+								max-width: 30%;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+							}
+							&.active{
+								color: @activeFontColor;
+								.play-icon{
+									display: inline-block;
+									padding-right: 0.5rem;
+								}
 							}
 						}
 					}
 				}
 			}
+			
 		}
 	}
 
@@ -232,6 +240,6 @@ import { mapState, mapGetters } from 'vuex'
 
 	.slide-up-enter-active,
 	.slide-up-leave-active{
-		transition: transform 1s ease-in-out;
+		transition: transform 0.6s ease-in-out;
 	}
 </style>
