@@ -242,7 +242,7 @@ export default {
           }
         }
         &.active{
-          animation: rotating 10s linear infinite both;
+          animation: rotating 10s linear infinite forwards;
         }
       }
     }
