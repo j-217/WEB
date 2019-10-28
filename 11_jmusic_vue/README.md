@@ -46,6 +46,13 @@ npm run build
     <img src="./resource/7_album.png" height="300" style="padding: 1rem 0;">
   </div>
 
+- 搜索页面展示
+  <div>
+    <img src="./resource/gif/4_search_zip.gif" height="300" style="padding: 1rem 0;">
+    <img src="./resource/8_hot_search.png" height="300" style="padding: 1rem 0;">
+    <img src="./resource/9_search_result.png" height="300" style="padding: 1rem 0;">
+  </div>
+
 ## 功能说明
 1. 用户登录：</br>
 由于部分API需登录后使用，目前仅使用手机登录方式并且使用get方式提交数据，为防止个人信息泄露使用时请申请测试号码。
@@ -53,11 +60,12 @@ npm run build
 2. 首页：</br>
 展示轮播图、推荐歌单（需登录）、最新专辑
 
-3. 播放器（页面最下方）：</br>
+3. 播放器：</br>
 - 页面初始化时添加推荐歌曲
 - 播放，暂停
 - 播放列表前/后首歌曲切换
 - 播放模式顺序/随机/单曲切换
+- 点击进度条跳转功能
 
 4. 当前歌曲：</br>
 - 唱片机动画效果
@@ -72,6 +80,15 @@ npm run build
 6. 专辑页：</br>
 - 专辑详情展示
 - 专辑列表加入当前播放列表
+
+7. 搜索页：</br>
+- 默认搜索内容
+- 展示搜索历史记录、热门搜索
+- 删除历史记录
+
+8. 搜索结果页：</br>
+- 默认显示30条搜索结果
+- 上拉加载更多搜索结果
   
 ## Bug记录
 
@@ -81,7 +98,7 @@ npm run build
 
 描述：播放中刷新页面，播放状态保持为播放，但歌曲未播放
 - 状态：待处理
-- 方案：修复playStatusFlag状态逻辑
+- 方案：在player mounted钩子函数中控制播放状态，刷新时设置为false
 
 描述：暂停时记录唱片机转动当前位置
 - 状态：待处理
@@ -89,7 +106,5 @@ npm run build
 
 ## 待完善功能
 
-- 歌曲进度条跳转功能
 - “我的”、“推荐”页面功能
-- 搜索功能
 - 优化ICON图标

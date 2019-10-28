@@ -28,9 +28,11 @@ export default {
   async getLyric(context, payload){
     let result = await getData('queryLyric', payload)
     if(result.code === 200){
-      context.commit('setLyric', result.lrc.lyric)
-    }else{
-      context.commit('setLyric', '[00:00.00]歌词加载中!')
+      if(result.lrc.lyric){
+        context.commit('setLyric', result.lrc.lyric)
+      }else{
+        context.commit('setLyric', '[00:00.00]歌词加载中!')
+      }    
     }
   },
   // 获取歌曲总体信息
@@ -79,12 +81,43 @@ export default {
     }
   },
   // 获取歌单详情
-  async getSongsListDetail(contexnt, payload){
+  async getSongsListDetail(context, payload){
     let result = await getData('querySongsListDetail', {
       id: payload
     })
     if(result.code === 200){
-      contexnt.commit('setSongsListDetail', result)
+      context.commit('setSongsListDetail', result)
     }
-  }
+  },
+  // 获取默认搜索关键词
+  async getSearchDefaultKeyword(context, payload){
+    let result = await getData('querySearchDefaultKeyword')
+    if(result.code === 200){
+      context.commit('setSearchDefaultKeyword', result.data.realkeyword)
+    }
+  },
+  // 获取热搜列表（详细）
+  async getSearchHotDetail(context, payload){
+    let result = await getData('querySearchHotDetail')
+    if(result.code === 200){
+      context.commit('setSearchHotDetail', result.data)
+    }
+  },
+  // 获取搜索结果列表
+  async getSearchResultList(context, payload){
+    let result = await getData('querySearchResultList', payload)
+    if(result.code === 200){
+      // 查看是否重新搜索，如果重新搜索就覆盖原列表，未重新搜索就在原列表后添加
+      if(context.state.researchFlag){
+        context.commit('setSearchResultList', result.result)
+        context.commit('setResearchFlag', false)
+      }else{
+        let newObj = {
+          songs: context.state.searchResultList.songs.concat(result.result.songs),
+          songCount: result.result.songCount
+        }
+        context.commit('setSearchResultList', newObj)
+      }  
+    }
+  },
 }

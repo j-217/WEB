@@ -38,5 +38,25 @@ export default {
   // 设置歌单详情
   setSongsListDetail(state, payload){
     state.songsListDetail = payload
+  },
+  // 设置默认搜索关键词
+  setSearchDefaultKeyword(state, payload){
+    state.searchDefaultKeyword = payload
+  },
+  // 设置热搜列表（详细）
+  setSearchHotDetail(state, payload){
+    state.searchHotDetail = payload
+  },
+  // 设置搜索历史记录
+  setSearchHistory(state, payload){
+    state.searchHistory = payload
+  },
+  // 设置搜索结果（30条）
+  setSearchResultList(state, payload){
+    state.searchResultList = payload
+  },
+  // 设置搜索新词
+  setResearchFlag(state, payload){
+    state.researchFlag = payload
   }
 }

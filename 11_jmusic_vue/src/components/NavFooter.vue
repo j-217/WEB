@@ -35,7 +35,7 @@
 					</div>	
 					<div class="overflow-wrap">
 						<ul class="songs-list">
-							<li class="songs-list-item" v-for="(item, index) in playlist" :key="index" @click="goSwichSongs(item.id)">
+							<li class="songs-list-item" v-for="(item, index) in playlist" :key="index" @click="goSwitchSongs(item.id)">
 								<div class="song-info" :class="{'active': item.id === curMusic}">
 									<span class="play-icon"><van-icon name="volume-o" /></span>
 									<span class="song-name">{{ item.name }}</span>
@@ -94,7 +94,7 @@ import { mapState, mapGetters } from 'vuex'
 			// 	this.$store.dispatch('getCurMusicTotalInfos', this.$store.state.player.curMusic)
 			// },
 
-			goSwichSongs(musicId){
+			goSwitchSongs(musicId){
 				this.$store.dispatch('switchSongs', musicId)
 			},
 

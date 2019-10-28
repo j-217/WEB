@@ -26,5 +26,9 @@ export default {
   // 设置显示歌词
   setShowLyricFlag(state, payload){
     state.showLyricFlag = payload
-  } 
+  },
+  // 设置当前歌词
+  setCurLyricLine(state, payload){
+    state.curLyricLine = payload
+  }
 }

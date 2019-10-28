@@ -17,7 +17,7 @@
           <ul class="lyric-box" ref="lyricBoxElement">
             <li class="lyric-line-box" 
                 v-for="(item, index) in lyricList" :key="index"
-                :class="{'active': index === curLine}"
+                :class="{'active': index === curLyricLine}"
             >
               <span class="line ">{{ item.line }}</span>
             </li>
@@ -30,7 +30,7 @@
     <div class="footer">
       <div class="progress-box">
         <div class="cur-time">{{ musicCurTime | formatTime }}</div>
-        <div class="progress-bar">
+        <div class="progress-bar" @click="jumpToPosition">
           <van-progress
             pivot-text=""
             color="#ee0a24"
@@ -93,7 +93,6 @@ export default {
   data(){
     return{
       showList: false,
-      curLine: 0,
     }
   },
 
@@ -116,6 +115,7 @@ export default {
       musicDuration: state => state.music.musicDuration,
       playMode: state => state.player.playMode,
       showLyricFlag: state => state.player.showLyricFlag,
+      curLyricLine: state => state.player.curLyricLine,
     }),
     ...mapGetters({
       playlist: 'playlistFilteDuplicate',
@@ -134,10 +134,22 @@ export default {
       this.$store.commit('setPlayStatusFlag', newFlag)
     },
 
+    jumpToPosition(e){
+      let newX = e.offsetX,
+       progressBar = document.getElementsByClassName("van-progress__portion")[0],
+       player = document.getElementsByClassName("player")[0],
+       progressBarTotalWidth = progressBar.parentElement.clientWidth,
+       musicDuration = this.$store.state.music.musicDuration,
+       newPositionRatio = parseFloat((newX / progressBarTotalWidth).toFixed(2))
+      progressBar.style.setProperty("width", newX)
+      player.currentTime = (newPositionRatio * musicDuration).toFixed(3)
+    },
+
     goSwitchPlayMode(){
       let playModeList = ['order', 'random', 'single'],
         playModeIndex = playModeList.indexOf(this.$store.state.player.playMode),
         newPlayModeIndex = (playModeIndex + 1) % 3
+      // logging the current index of playmode
       console.log(playModeIndex)
       this.$store.commit('setPlayMode', playModeList[newPlayModeIndex])
     },
@@ -145,11 +157,6 @@ export default {
     goSwitchSongs(switchMode, musicId){
       if(switchMode !== 'noChange'){
         this.$store.commit('setSwitchMode', switchMode)
-      }
-      this.curLine = 0
-      console.log(this.curLine)
-      if(this.$store.state.player.showLyricFlag){
-        this.$refs.lyricBoxElement.style.top = '10rem'
       }
       this.$store.dispatch('switchSongs', musicId)
     }
@@ -164,7 +171,7 @@ export default {
       if(this.$store.state.player.showLyricFlag){
         for(let i = 0;i < lyricList.length - 2; i++ ){
           if(newVal >= lyricList[i].time && newVal < lyricList[i+1].time){
-            this.curLine = i
+            this.$store.commit('setCurLyricLine', i)
             let curLineElement = document.getElementsByClassName("lyric-line-box active")[0]
             if(curLineElement.offsetTop > 120){
               lyricBoxElement.style.top = `${10 - (curLineElement.offsetTop / 16)}rem`

@@ -3,9 +3,12 @@
     <audio 
       :src="curMusicUrl" 
       ref="player"
+      class="player"
       @durationchange="setMusicDuration"
       @timeupdate="setMusicCurTime"  
       @ended="goSwitchSongs(curMusic)"
+      @pause="switchPause"
+      @play="switchPlay"
     >
     </audio>
   </div>
@@ -23,18 +26,31 @@ import { mapState } from 'vuex'
       }
     },
 
+
     computed: {
       ...mapState({
         curMusicUrl: state => state.music.musicUrl,
         playStatusFlag: state => state.player.playStatusFlag,
         curMusic: state => state.player.curMusic,
+        musicCurTime: state => state.music.musicCurTime,
       })
+    },
+
+    mounted(){
+      this.switchPause()
     },
 
     methods: {
       setMusicDuration(){
         this.$store.commit('setMusicDuration', this.$refs.player.duration)
       },
+      switchPause(){
+        this.$store.commit('setPlayStatusFlag', false)
+      },
+      switchPlay(){
+        this.$store.commit('setPlayStatusFlag', true)
+      },
+
       setMusicCurTime(){
         this.$store.commit('setMusicCurTime', this.$refs.player.currentTime) 
       },
@@ -52,6 +68,7 @@ import { mapState } from 'vuex'
           this.$refs.player.pause()
         }
       },
+      
 
       curMusicUrl(newVal, oldVal){
         // 首次载入时不自动播放

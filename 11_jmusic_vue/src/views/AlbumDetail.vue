@@ -1,7 +1,7 @@
 <template>
   <div class="album-detail-box" :style="`background-image: url(${albumDetail.album.picUrl})`">
     <!-- header -->
-    <common-header :title="title"></common-header>
+    <common-header :title='title'></common-header>
     <!-- body -->
     <div class="body-box">
       <div class="info-box">

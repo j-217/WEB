@@ -4,9 +4,12 @@
         <div class="left" @click="onClickLeft">
           <van-icon name="arrow-left" />
         </div>
-        <div class="title-box">
+        <div class="title-box" v-if="title">
           <div class="title">{{ title }}</div>
           <div class="info">{{ info }}</div>
+        </div>
+        <div class="search-box" v-if="searchKeyword">
+          <input type="search" :placeholder="searchKeyword" maxlength="12" v-model="keyword" @keydown.enter="goSearch()"/>
         </div>
         <div class="right">
           <van-icon name="ellipsis" />
@@ -18,13 +21,38 @@
 export default {
   props:[
     'title',
-    'info'
+    'info',
+    'searchKeyword'
   ],
+
+  data(){
+    return{
+      keyword: '',
+    }
+  },
 
   methods: {
     onClickLeft(){
       this.$router.back()
     },
+
+    goSearch(){
+      let keywords = this.keyword || this.searchKeyword,
+          searchHistory = JSON.parse(window.localStorage.getItem("searchHistory") || '[]')
+      searchHistory.unshift(keywords)
+      window.localStorage.setItem("searchHistory", JSON.stringify(searchHistory))
+
+      this.$store.commit('setResearchFlag', true)
+      this.$store.dispatch('getSearchResultList', {
+        keywords
+      })
+      this.$router.push({
+        path: 'result',
+        query: {
+          keywords,
+        }
+      })
+    }
   }
 }
 </script>
@@ -50,10 +78,29 @@ export default {
       font-size: large;
       white-space: nowrap;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       .info{
         font-size: small;
         white-space: nowrap;
         overflow: hidden;
+      }
+    }
+    .search-box{
+      width: 100%;
+      font-size: 1rem;
+      white-space: nowrap;
+      color:#000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 0.5rem;
+      input{
+        background-color: inherit;
+        border-bottom: 0.02rem solid #000;
+        height: 100%;
+        width: 100%;
       }
     }
     .right{

@@ -16,7 +16,7 @@
             <li :class="{'current-list': currentListFlag === 'recommend'}" @click="currentListFlag = 'recommend'">推荐</li>
           </ul>
         </div>
-        <div class="right-btn">
+        <div class="right-btn" @click="goSearchPage">
           <van-icon
                   name="search"
                   size="1.6rem"
@@ -106,7 +106,14 @@ import { mapState } from 'vuex'
             //   name: 'login'
             // })
           })
-      }
+      },
+
+      goSearchPage(){
+        this.$router.push({
+          path: '/search/'
+          // name: 'search'
+        })
+      },
     }
   }
 </script>

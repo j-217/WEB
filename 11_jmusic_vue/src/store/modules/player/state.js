@@ -13,4 +13,6 @@ export default {
   curMusic: '',
   // 显示歌词
   showLyricFlag: false,
+  // 当前歌词
+  curLyricLine: 0,
 }

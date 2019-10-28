@@ -25,4 +25,14 @@ export default {
   songsListDetail: {},
   // 专辑详情
   albumDetail: {},
+  // 默认搜索关键词
+  searchDefaultKeyword: '',
+  // 热搜列表（详细）
+  searchHotDetail: [],
+  // 搜索历史记录（在localstorage保存）
+  searchHistory: [],
+  // 搜索结果（30条）
+  searchResultList: [],
+  // 搜索新词
+  researchFlag: false,
 }

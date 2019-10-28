@@ -28,5 +28,12 @@ const apiList = {
     querySongsListDetail: '/playlist/detail',
     // 获取专辑详情
     queryAlbumDetail: '/album',
+
+    // 获取默认搜索关键词
+    querySearchDefaultKeyword: '/search/default',
+    // 获取热搜列表（详细）
+    querySearchHotDetail: '/search/hot/detail',
+    // 获取搜索结果列表
+    querySearchResultList: '/search'
 };
 export default apiList

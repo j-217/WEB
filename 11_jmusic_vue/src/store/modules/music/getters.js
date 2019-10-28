@@ -28,12 +28,14 @@ export default {
   // 专辑歌曲去重
   albumSongsFilteDuplicate(state){
     let result = [], keyObj = {};
-    state.albumDetail.songs.forEach((item)=>{
-      if(!keyObj[item.id]){
-        result.push(item)
-        keyObj[item.id] = true
-      }
-    })
-    return result
+    if(state.albumDetail.songs){
+      state.albumDetail.songs.forEach((item)=>{
+        if(!keyObj[item.id]){
+          result.push(item)
+          keyObj[item.id] = true
+        }
+      })
+      return result
+    }
   }
 }
